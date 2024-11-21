@@ -14,6 +14,12 @@ public class Group
         Name = name;
     }
 
+    public Group(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
     public void SetName(string name)
     {
         Name = name;

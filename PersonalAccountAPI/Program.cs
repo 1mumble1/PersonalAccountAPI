@@ -1,5 +1,6 @@
 using Application.Services;
-using Domain.Repositories;
+using Domain.Abstractions.Repositories;
+using Domain.Abstractions.Services;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,24 @@ builder.Services.AddDbContext<AppDbContext>(
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 
+string policyName = configuration["Policy:Name"];
+
+string serverUrl = configuration["Cors:Url"];
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(policyName,
+        policy =>
+        {
+            policy.WithOrigins(serverUrl)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
 
 var app = builder.Build();
 
@@ -33,6 +51,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(policyName);
 
 app.UseAuthorization();
 
