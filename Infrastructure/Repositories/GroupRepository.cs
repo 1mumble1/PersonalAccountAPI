@@ -1,7 +1,6 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using PersonalAccountAPI.Dto;
 
 namespace Infrastructure.Repositories;
 
@@ -14,24 +13,9 @@ public class GroupRepository : IGroupRepository
         _dbContext = dbContext;
     }
 
-    public async Task<GroupResponse> GetById(int id)
+    public async Task<Group> GetById(int id)
     {
-        var group = await _dbContext.Groups
-            .Include(g => g.Users)
-            .Where(g => g.Id == id)
-            .Select(g => new GroupResponse
-            {
-                Name = g.Name,
-                Users = g.Users.Select(u => new UserResponse
-                {
-                    Name = u.Name,
-                    Surname = u.Surname,
-                    UserName = u.UserName,
-                    Photo = u.Photo
-                }).ToList()
-            })
-            .FirstOrDefaultAsync();
-
+        var group = await _dbContext.Groups.FirstOrDefaultAsync(g => g.Id == id);
         return group;
     }
 
@@ -39,6 +23,7 @@ public class GroupRepository : IGroupRepository
     {
         var groups = await _dbContext.Groups
             .AsNoTracking()
+            /*.Include(g => g.Users)*/
             .ToListAsync();
 
         return groups;
