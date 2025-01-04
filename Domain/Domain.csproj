@@ -6,4 +6,15 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Abstractions\Dto\**" />
+    <EmbeddedResource Remove="Abstractions\Dto\**" />
+    <None Remove="Abstractions\Dto\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Abstractions\Dto\GroupResponse.cs" />
+    <Compile Include="Abstractions\Dto\UserResponse.cs" />
+  </ItemGroup>
+
 </Project>

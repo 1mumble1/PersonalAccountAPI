@@ -15,7 +15,8 @@ public class UserRepository : IUserRepository
 
     public async Task<User> GetById(int id)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(u => u.Id == id);
         return user;
     }
 

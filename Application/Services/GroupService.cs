@@ -1,6 +1,7 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Abstractions.Services;
 using Domain.Entities;
+using PersonalAccountAPI.Dto;
 
 namespace Application.Services;
 
@@ -13,7 +14,7 @@ public class GroupService : IGroupService
         _groupRepository = groupRepository;
     }
 
-    public async Task<Group> GetGroupById(int id)
+    public async Task<GroupResponse> GetGroupById(int id)
     {
         return await _groupRepository.GetById(id);
     }
