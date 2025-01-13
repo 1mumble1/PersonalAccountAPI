@@ -48,7 +48,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult> DeleteHotel([FromRoute] int id)
+    public async Task<ActionResult> DeleteUser([FromRoute] int id)
     {
         await _userService.DeleteUser(id);
         return Ok(id);
