@@ -10,4 +10,5 @@ public interface IGroupService
     Task<List<Group>> GetAllGroups();
     Task<GroupResponse> GetGroupById(int id);
     Task<int> UpdateGroup(Group modifiedGroup);
+    Task<GroupWithSchedulesResponse> GetGroupByIdWithSchedules(int id);
 }

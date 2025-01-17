@@ -34,6 +34,33 @@ public class GroupRepository : IGroupRepository
         return group;
     }
 
+    public async Task<GroupWithSchedulesResponse> GetByIdWithSchedules(int id)
+    {
+        var group = await _dbContext.Groups
+            .Include(g => g.Schedules)
+                .ThenInclude(s => s.SchedulesToLessons)
+                    .ThenInclude(sl => sl.Lesson)
+            .AsNoTracking()
+            .Where(g => g.Id == id)
+            .Select(g => new GroupWithSchedulesResponse
+            {
+                Name = g.Name,
+                Schedules = g.Schedules.Select(s => new ScheduleResponse
+                {
+                    DayOfWeek = s.DayOfWeek,
+                    Lessons = s.SchedulesToLessons.Select(sl => new LessonsDto
+                    {
+                        LessonName = sl.Lesson.Name,
+                        StartTime = sl.StartTime,
+                        EndTime = sl.EndTime
+                    }).ToList()
+                }).ToList()
+            })
+        .FirstOrDefaultAsync();
+
+        return group;
+    }
+
     public async Task<List<Group>> GetAll()
     {
         var groups = await _dbContext.Groups

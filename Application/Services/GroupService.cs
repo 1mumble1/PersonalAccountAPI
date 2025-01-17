@@ -24,6 +24,11 @@ public class GroupService : IGroupService
         return await _groupRepository.GetAll();
     }
 
+    public async Task<GroupWithSchedulesResponse> GetGroupByIdWithSchedules(int id)
+    {
+        return await _groupRepository.GetByIdWithSchedules(id);
+    }
+
     public async Task<Group> CreateGroup(Group group)
     {
         return await _groupRepository.Create(group);

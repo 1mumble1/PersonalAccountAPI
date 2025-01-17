@@ -28,6 +28,13 @@ public class GroupController : ControllerBase
         return Ok(group);
     }
 
+    [HttpGet("{id:int}/schedule")]
+    public async Task<ActionResult<GroupWithSchedulesResponse>> GetGroupByIdWithSchedules([FromRoute] int id)
+    {
+        var group = await _groupService.GetGroupByIdWithSchedules(id);
+        return Ok(group);
+    }
+
     [HttpPost("")]
     public async Task<ActionResult<GroupResponse>> CreateGroup([FromBody] GroupResponse response)
     {
