@@ -12,7 +12,7 @@ public class ScheduleRepository : IScheduleRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<List<ScheduleResponse>> GetByIdGroup(int groupId)
+    public async Task<List<ScheduleResponse>> GetScheduleByIdGroup(int groupId)
     {
         var schedules = await _dbContext.Schedules
         .Include(s => s.SchedulesToLessons) 
