@@ -15,9 +15,9 @@ public class ScheduleRepository : IScheduleRepository
     public async Task<List<ScheduleResponse>> GetScheduleByIdGroup(int groupId)
     {
         var schedules = await _dbContext.Schedules
-        .Include(s => s.SchedulesToLessons) 
-            .ThenInclude(stl => stl.Lesson) 
-        .Where(s => s.GroupId == groupId) 
+        .Include(s => s.SchedulesToLessons)
+            .ThenInclude(stl => stl.Lesson)
+        .Where(s => s.GroupId == groupId)
         .ToListAsync();
 
         var scheduleResponses = schedules.Select(schedule => new ScheduleResponse
@@ -34,29 +34,48 @@ public class ScheduleRepository : IScheduleRepository
         return scheduleResponses;
     }
 
-    public async Task<Schedule> Create(Schedule schedule)
+    public async Task<Schedule> CreateByIdGroup(int groupId, Schedule schedule)
     {
+        schedule.SetGroupId(groupId);
         await _dbContext.AddAsync(schedule);
         await _dbContext.SaveChangesAsync();
-        
+
         return schedule;
     }
 
-    public async Task<int> Delete(int id)
+    public async Task<int> DeleteByIdGroupWithDayOfWeek(int groupId, byte DayOfWeek)
     {
-        await _dbContext.Schedules
-            .Where(s => s.Id == id)
-            .ExecuteDeleteAsync();
+        int deletedCount = await _dbContext.Schedules
+             .Where(s => s.DayOfWeek == DayOfWeek && s.GroupId == groupId)
+             .ExecuteDeleteAsync();
 
-        return id;
+        return deletedCount;
     }
 
-
-    public async Task<int> Update(Schedule modifiedSchedule)
+    public async Task<int> DeleteByIdGroup(int groupId)
     {
+        var rowsDeleted = await _dbContext.Schedules
+            .Where(s => s.GroupId == groupId)
+            .ExecuteDeleteAsync();
+
+        return rowsDeleted;
+    }
+
+    public async Task<int> UpdateByIdGroup(int groupId, Schedule modifiedSchedule)
+    {
+        var existingSchedule = await _dbContext.Schedules
+        .FirstOrDefaultAsync(s => s.Id == modifiedSchedule.Id && s.GroupId == groupId);
+
+        existingSchedule.SetDayOfWeek(modifiedSchedule.DayOfWeek);
+
+        existingSchedule.SetSchedulesToLessons(modifiedSchedule.SchedulesToLessons);
+
         _dbContext.Schedules.Update(modifiedSchedule);
         await _dbContext.SaveChangesAsync();
 
         return modifiedSchedule.Id;
     }
+
+    //бля тут такая ебля с private set в сущностях я не ебу как правильно
+    //так что если косяк на косяке получился извиняй братан :)
 }

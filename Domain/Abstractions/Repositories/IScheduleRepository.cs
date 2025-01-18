@@ -4,9 +4,10 @@ using PersonalAccountAPI.Dto;
 namespace Domain.Abstractions.Repositories;
 public interface IScheduleRepository
 {
-    Task<Schedule> Create(Schedule schedule);
-    Task<int> Update(Schedule modifiedSchedule);
-    Task<int> Delete(int id);
+    Task<Schedule> CreateByIdGroup(int groupId, Schedule schedule);
+    Task<int> UpdateByIdGroup(int groupId, Schedule modifiedSchedule);
+    Task<int> DeleteByIdGroupWithDayOfWeek(int groupId, byte DayOfWeek);
+    Task<int> DeleteByIdGroup(int groupId);
     Task<List<ScheduleResponse>> GetScheduleByIdGroup(int groupId);
     // GetAll()?????? хз хз надо или нет
 }
