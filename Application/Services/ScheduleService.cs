@@ -6,7 +6,7 @@ using PersonalAccountAPI.Dto;
 
 namespace Application.Services;
 
-internal class ScheduleService : IScheduleService
+public class ScheduleService : IScheduleService
 {
     private readonly IScheduleRepository _scheduleRepository;
 

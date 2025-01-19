@@ -11,6 +11,12 @@ public class Lesson
         Name = name;
     }
 
+    public Lesson(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
     public void SetName(string name)
     {
         Name = name;

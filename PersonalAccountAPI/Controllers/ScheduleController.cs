@@ -34,21 +34,21 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpPut("{groupId:int}")]
-    public async Task<ActionResult<int>> UpdateSchedule([FromRoute] int groupId, [FromBody] Schedule modifiedSchedule)
+    public async Task<ActionResult<ScheduleResponse>> UpdateSchedule([FromRoute] int groupId, [FromBody] Schedule modifiedSchedule)
     {
         var newSchedule = await _scheduleService.UpdateScheduleByGroupId(groupId, modifiedSchedule);
         return Ok(newSchedule);
     }
 
     [HttpDelete("{groupId:int}/{dayOfWeek:int}")]
-    public async Task<ActionResult<int>> DeleteScheduleByDay([FromRoute] int groupId, [FromRoute] byte DayOfWeek)
+    public async Task<ActionResult> DeleteScheduleByDay([FromRoute] int groupId, [FromRoute] byte DayOfWeek)
     {
         await _scheduleService.DeleteScheduleByGroupIdWithDayOfWeek(groupId, DayOfWeek);
         return Ok(groupId);
     }
 
     [HttpDelete("{groupId:int}")]
-    public async Task<ActionResult<int>> DeleteSchedule([FromRoute] int groupId)
+    public async Task<ActionResult> DeleteSchedule([FromRoute] int groupId)
     {
         await _scheduleService.DeleteScheduleByGroupId(groupId);
         return Ok(groupId);
