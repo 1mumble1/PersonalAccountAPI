@@ -9,12 +9,14 @@ public class Lesson
     public Lesson(string name)
     {
         Name = name;
+        SchedulesToLessons = new List<ScheduleToLesson>();
     }
 
     public Lesson(int id, string name)
     {
         Id = id;
         Name = name;
+        SchedulesToLessons = new List<ScheduleToLesson>();
     }
 
     public void SetName(string name)

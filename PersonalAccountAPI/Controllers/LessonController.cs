@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions.Services;
+﻿using Domain.Abstractions.Dto;
+using Domain.Abstractions.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -34,16 +35,16 @@ public class LessonController : ControllerBase
     }
 
     [HttpPost("")]
-    public async Task<ActionResult<LessonsDto>> CreateLesson([FromBody] LessonsDto response)
+    public async Task<ActionResult<LessonResponse>> CreateLesson([FromBody] LessonResponse response)
     {
-        var newLesson = new Lesson(response.LessonName);
+        var newLesson = new Lesson(response.Name);
         await _lessonService.CreateLesson(newLesson);
 
         return Ok(newLesson);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<LessonsDto>> UpdateLesson([FromRoute] int id, [FromBody] Lesson modifiedLesson)
+    public async Task<ActionResult<LessonResponse>> UpdateLesson([FromRoute] int id, [FromBody] LessonResponse modifiedLesson)
     {
         var lesson = new Lesson(id, modifiedLesson.Name);
         await _lessonService.UpdateLesson(lesson);

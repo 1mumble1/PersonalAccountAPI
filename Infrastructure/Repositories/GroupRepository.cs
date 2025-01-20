@@ -50,8 +50,8 @@ public class GroupRepository : IGroupRepository
                     Lessons = s.SchedulesToLessons.Select(sl => new LessonsDto
                     {
                         LessonName = sl.Lesson.Name,
-                        StartTime = sl.StartTime.ToTimeSpan(),
-                        EndTime = sl.EndTime.ToTimeSpan()
+                        StartTime = sl.StartTime,
+                        EndTime = sl.EndTime
                     }).ToList()
                 }).ToList()
             })

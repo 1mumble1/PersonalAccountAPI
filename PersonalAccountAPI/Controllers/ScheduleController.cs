@@ -26,8 +26,9 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpPost("{groupId:int}")]
-    public async Task<ActionResult<Schedule>> CreateSchedule([FromRoute] int groupId, [FromBody] Schedule schedule)
+    public async Task<ActionResult<ScheduleResponse>> CreateSchedule([FromRoute] int groupId, [FromBody] ScheduleResponse response)
     {
+        var schedule = new Schedule(response.DayOfWeek);
         var createSchedule = await _scheduleService.CreateScheduleForGroup(groupId, schedule);
 
         return Ok(createSchedule);

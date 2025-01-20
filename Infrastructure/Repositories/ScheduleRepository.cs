@@ -26,8 +26,8 @@ public class ScheduleRepository : IScheduleRepository
             Lessons = schedule.SchedulesToLessons.Select(stl => new LessonsDto
             {
                 LessonName = stl.Lesson.Name,
-                StartTime = stl.StartTime.ToTimeSpan(),
-                EndTime = stl.EndTime.ToTimeSpan()
+                StartTime = stl.StartTime,
+                EndTime = stl.EndTime
             }).ToList()
         }).ToList();
 

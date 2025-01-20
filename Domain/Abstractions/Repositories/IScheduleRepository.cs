@@ -9,5 +9,4 @@ public interface IScheduleRepository
     Task<int> DeleteByIdGroupWithDayOfWeek(int groupId, byte DayOfWeek);
     Task<int> DeleteByIdGroup(int groupId);
     Task<List<ScheduleResponse>> GetScheduleByIdGroup(int groupId);
-    // GetAll()?????? хз хз надо или нет
 }

@@ -33,13 +33,17 @@ public class LessonRepository : ILessonRepository
     {
         var lessons = await _dbContext.Lessons
             .AsNoTracking()
-            .Include(l => l.SchedulesToLessons)
-            .SelectMany(l => l.SchedulesToLessons.Select( sl => new LessonsDto
+            //.Include(l => l.SchedulesToLessons)
+            /*.SelectMany(l => l.SchedulesToLessons.Select(sl => new LessonsDto
             {
                 LessonName = l.Name,
-                StartTime = sl.StartTime.ToTimeSpan(),
-                EndTime = sl.EndTime.ToTimeSpan(),
-            }))
+                StartTime = sl.StartTime,
+                EndTime = sl.EndTime,
+            }))*/
+            .Select(l => new LessonsDto
+            {
+                LessonName = l.Name,
+            })
             .ToListAsync();
 
         return lessons;
@@ -49,13 +53,13 @@ public class LessonRepository : ILessonRepository
     {
         var lesson = await _dbContext.Lessons
             .AsNoTracking()
-            .Include(l => l.SchedulesToLessons)
+            //.Include(l => l.SchedulesToLessons)
             .Where(l => l.Id == id)
             .Select(l => new LessonsDto
             {
                 LessonName = l.Name,
-                StartTime = l.SchedulesToLessons.FirstOrDefault()!.StartTime.ToTimeSpan(),
-                EndTime = l.SchedulesToLessons.FirstOrDefault()!.EndTime.ToTimeSpan(),
+                //StartTime = l.SchedulesToLessons.FirstOrDefault()!.StartTime,
+                //EndTime = l.SchedulesToLessons.FirstOrDefault()!.EndTime,
             })
             .FirstOrDefaultAsync();
         
