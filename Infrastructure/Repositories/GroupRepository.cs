@@ -60,6 +60,28 @@ public class GroupRepository : IGroupRepository
         return group;
     }
 
+    public async Task<GroupWithEventsResponse> GetByIdWithEvents(int id)
+    {
+        var group = await _dbContext.Groups
+            .Include(g => g.DancingEvents)
+            .AsNoTracking()
+            .Where(g => g.Id == id)
+            .Select(g => new GroupWithEventsResponse
+            {
+                Name = g.Name,
+                Events = g.DancingEvents.Select(s => new DancingEventDto
+                {
+                    Name = s.Name,
+                    Date = s.Date,
+                    Time = (TimeOnly)s.Time,
+                    Description = s.Description,
+                }).ToList()
+            })
+        .FirstOrDefaultAsync();
+
+        return group;
+    }
+
     public async Task<List<Group>> GetAll()
     {
         var groups = await _dbContext.Groups
@@ -99,7 +121,26 @@ public class GroupRepository : IGroupRepository
         return groups;
     }
 
-    //ПОЛУЧИТЬ ГРУППУ С ИВЕНТОМ ПО id И ALL
+    public async Task<List<GroupWithEventsResponse>> GetAllWithEvents()
+    {
+        var groups = await _dbContext.Groups
+            .Include(g => g.DancingEvents)
+            .AsNoTracking()
+            .Select(g => new GroupWithEventsResponse
+            {
+                Name = g.Name,
+                Events = g.DancingEvents.Select(s => new DancingEventDto
+                {
+                    Name = s.Name,
+                    Date = s.Date,
+                    Time = (TimeOnly)s.Time,
+                    Description = s.Description,
+                }).ToList()
+            })
+        .ToListAsync();
+
+        return groups;
+    }
 
     public async Task<Group> Create(Group group)
     {

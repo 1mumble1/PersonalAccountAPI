@@ -12,4 +12,6 @@ public interface IGroupService
     Task<int> UpdateGroup(Group modifiedGroup);
     Task<GroupWithSchedulesResponse> GetGroupByIdWithSchedules(int id);
     Task<List<GroupWithSchedulesResponse>> GetAllGroupsWithSchedules();
+    Task<GroupWithEventsResponse> GetGroupByIdWithEvents(int id);
+    Task<List<GroupWithEventsResponse>> GetAllGroupsWithEvents();
 }

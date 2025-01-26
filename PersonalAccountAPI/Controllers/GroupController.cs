@@ -42,6 +42,20 @@ public class GroupController : ControllerBase
         return Ok(groups);
     }
 
+    [HttpGet("{id:int}/dancingEvents")]
+    public async Task<ActionResult<GroupWithEventsResponse>> GetGroupByIdWithEvents([FromRoute] int id)
+    {
+        var group = await _groupService.GetGroupByIdWithEvents(id);
+        return Ok(group);
+    }
+
+    [HttpGet("/dancingEvents")]
+    public async Task<ActionResult<List<GroupWithEventsResponse>>> GetAllGroupsWithEvents()
+    {
+        var groups = await _groupService.GetAllGroupsWithEvents();
+        return Ok(groups);
+    }
+
     [HttpPost("")]
     public async Task<ActionResult<GroupResponse>> CreateGroup([FromBody] GroupResponse response)
     {
