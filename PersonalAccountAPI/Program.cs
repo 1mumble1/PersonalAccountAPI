@@ -41,6 +41,7 @@ builder.Services.AddControllers()
             new JsonStringEnumConverter() // Опционально, если нужны enum как строки
         );
     });
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.MapType<TimeOnly>(() => new OpenApiSchema
@@ -49,7 +50,15 @@ builder.Services.AddSwaggerGen(c =>
         Format = "time",
         Example = new OpenApiString("09:30") // Пример формата
     });
+
+    c.MapType<DateOnly>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "date",
+        Example = new OpenApiString("2023-10-25")
+    });
 });
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

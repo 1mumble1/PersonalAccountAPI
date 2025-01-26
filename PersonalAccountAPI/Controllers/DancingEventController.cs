@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PersonalAccountAPI.Controllers;
 
 [ApiController]
-[Route("schedule")]
+[Route("dancingEvent")]
 public class DancingEventController : ControllerBase
 {
     private readonly IDancingEventService _dancingEventService;
