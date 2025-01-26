@@ -99,6 +99,8 @@ public class GroupRepository : IGroupRepository
         return groups;
     }
 
+    //ПОЛУЧИТЬ ГРУППУ С ИВЕНТОМ ПО id И ALL
+
     public async Task<Group> Create(Group group)
     {
         await _dbContext.Groups.AddAsync(group);

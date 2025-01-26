@@ -32,6 +32,8 @@ builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<ILessonRepository, LessonRepository>();
+builder.Services.AddScoped<IDancingEventService, DancingEventService>();
+builder.Services.AddScoped<IDancingEventRepository, DancingEventRepository>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
