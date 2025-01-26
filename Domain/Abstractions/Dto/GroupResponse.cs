@@ -1,4 +1,4 @@
-﻿namespace PersonalAccountAPI.Dto;
+﻿namespace Domain.Abstractions.Dto;
 
 public class GroupResponse
 {

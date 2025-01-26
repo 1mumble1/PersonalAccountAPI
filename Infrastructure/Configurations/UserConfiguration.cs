@@ -39,6 +39,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasOne(u => u.Group)
             .WithMany(g => g.Users)
-            .HasForeignKey(u => u.GroupId);
+            .HasForeignKey(u => u.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

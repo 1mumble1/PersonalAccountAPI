@@ -2,8 +2,6 @@
 using Domain.Abstractions.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using PersonalAccountAPI.Dto;
 
 namespace PersonalAccountAPI.Controllers;
 

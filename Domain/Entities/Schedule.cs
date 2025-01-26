@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Entities;
 
 public class Schedule
 {
@@ -6,6 +8,7 @@ public class Schedule
     public byte DayOfWeek { get; private set; }
     public int GroupId { get; private set; }
     public Group Group { get; private set; }
+    [JsonIgnore]
     public List<ScheduleToLesson> SchedulesToLessons { get; private set; }
 
     public Schedule(byte dayOfWeek)

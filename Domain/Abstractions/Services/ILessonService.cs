@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Domain.Abstractions.Services;
 

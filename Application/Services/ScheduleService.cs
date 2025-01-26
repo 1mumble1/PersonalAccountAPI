@@ -1,8 +1,7 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Abstractions.Services;
 using Domain.Entities;
-using Microsoft.Identity.Client;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Application.Services;
 
@@ -15,9 +14,9 @@ public class ScheduleService : IScheduleService
         _scheduleRepository = scheduleRepository;
     }
 
-    public async Task<Schedule> CreateScheduleForGroup(int groupId, Schedule schedule)
+    public async Task<Schedule> CreateScheduleForGroup(int groupId, ScheduleResponseWithoutId scheduleResponse)
     {
-        return await _scheduleRepository.CreateByIdGroup(groupId, schedule);
+        return await _scheduleRepository.CreateByIdGroup(groupId, scheduleResponse);
     }
 
     public async Task<int> DeleteScheduleByGroupId(int groupId)
@@ -49,15 +48,12 @@ public class ScheduleService : IScheduleService
         return await _scheduleRepository.GetScheduleByIdGroup(groupId);
     }
 
-    public async Task<int> UpdateScheduleByGroupId(int groupId, Schedule modifiedSchedule)
+    public async Task<int> UpdateSchedule(ScheduleResponse modifiedSchedule)
     {
-        var existingSchedule = await _scheduleRepository.GetScheduleByIdGroup(groupId);
-        
-        if (existingSchedule == null)
-        {
-            throw new Exception($"Schedule for groupId {groupId} not found");
-        }
-
-        return await _scheduleRepository.UpdateByIdGroup(groupId, modifiedSchedule);
+        return await _scheduleRepository.Update(modifiedSchedule);
+    }
+    public async Task<int> DeleteSchedule(int scheduleId)
+    {
+        return await _scheduleRepository.Delete(scheduleId);
     }
 }

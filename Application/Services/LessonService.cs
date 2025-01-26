@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Abstractions.Services;
 using Domain.Entities;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Application.Services;
 

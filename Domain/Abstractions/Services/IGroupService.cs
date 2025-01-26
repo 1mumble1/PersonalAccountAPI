@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Domain.Abstractions.Services;
 
@@ -11,4 +11,5 @@ public interface IGroupService
     Task<GroupResponse> GetGroupById(int id);
     Task<int> UpdateGroup(Group modifiedGroup);
     Task<GroupWithSchedulesResponse> GetGroupByIdWithSchedules(int id);
+    Task<List<GroupWithSchedulesResponse>> GetAllGroupsWithSchedules();
 }

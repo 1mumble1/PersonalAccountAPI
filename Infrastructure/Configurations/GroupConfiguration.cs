@@ -29,6 +29,7 @@ public class GroupConfiguration : IEntityTypeConfiguration<Group>
 
         builder.HasMany(g => g.Schedules)
             .WithOne(s => s.Group)
-            .HasForeignKey(s => s.GroupId);
+            .HasForeignKey(s => s.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

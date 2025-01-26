@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Infrastructure.Repositories;
 

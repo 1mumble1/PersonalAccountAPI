@@ -1,9 +1,8 @@
-﻿using Azure.Core;
-using Domain.Abstractions.Repositories;
-using Domain.Abstractions.Services;
+﻿using Domain.Abstractions.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
+using System.Threading.Tasks;
 
 namespace PersonalAccountAPI.Controllers;
 
@@ -19,29 +18,28 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpGet("{groupId:int}")]
-    public async Task<ActionResult<List<ScheduleResponse>>> GetShedule([FromRoute] int groupId)
+    public async Task<ActionResult<List<ScheduleResponse>>> GetSchedule([FromRoute] int groupId)
     {
         var schedule = await _scheduleService.GetScheduleByIdGroup(groupId);
         return Ok(schedule);
     }
 
     [HttpPost("{groupId:int}")]
-    public async Task<ActionResult<ScheduleResponse>> CreateSchedule([FromRoute] int groupId, [FromBody] ScheduleResponse response)
+    public async Task<ActionResult<Schedule>> CreateSchedule([FromRoute] int groupId, [FromBody] ScheduleResponseWithoutId response)
     {
-        var schedule = new Schedule(response.DayOfWeek);
-        var createSchedule = await _scheduleService.CreateScheduleForGroup(groupId, schedule);
+        var createSchedule = await _scheduleService.CreateScheduleForGroup(groupId, response);
 
         return Ok(createSchedule);
     }
 
-    [HttpPut("{groupId:int}")]
-    public async Task<ActionResult<ScheduleResponse>> UpdateSchedule([FromRoute] int groupId, [FromBody] Schedule modifiedSchedule)
+    [HttpPut("")]
+    public async Task<ActionResult<ScheduleResponse>> UpdateSchedule([FromBody] ScheduleResponse modifiedSchedule)
     {
-        var newSchedule = await _scheduleService.UpdateScheduleByGroupId(groupId, modifiedSchedule);
+        var newSchedule = await _scheduleService.UpdateSchedule(modifiedSchedule);
         return Ok(newSchedule);
     }
 
-    [HttpDelete("{groupId:int}/{dayOfWeek:int}")]
+/*    [HttpDelete("{groupId:int}/{dayOfWeek:int}")]
     public async Task<ActionResult> DeleteScheduleByDay([FromRoute] int groupId, [FromRoute] byte DayOfWeek)
     {
         await _scheduleService.DeleteScheduleByGroupIdWithDayOfWeek(groupId, DayOfWeek);
@@ -53,6 +51,12 @@ public class ScheduleController : ControllerBase
     {
         await _scheduleService.DeleteScheduleByGroupId(groupId);
         return Ok(groupId);
-    }
+    }*/
 
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteSchedule([FromRoute] int id)
+    {
+        await _scheduleService.DeleteSchedule(id);
+        return Ok(id);
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Infrastructure.Repositories;
 
@@ -65,6 +65,35 @@ public class GroupRepository : IGroupRepository
         var groups = await _dbContext.Groups
             .AsNoTracking()
             /*.Include(g => g.Users)*/
+            .ToListAsync();
+
+        return groups;
+    }
+
+    public async Task<List<GroupWithSchedulesResponse>> GetAllWithSchedules()
+    {
+        var groups = await _dbContext.Groups
+            .Include(g => g.Schedules)
+                .ThenInclude(s => s.SchedulesToLessons)
+                    .ThenInclude(sl => sl.Lesson)
+            .AsNoTracking()
+            .Select(g => new GroupWithSchedulesResponse
+            {
+                Id = g.Id,
+                Name = g.Name,
+                Schedules = g.Schedules.Select(s => new ScheduleResponse
+                {
+                    Id= s.Id,
+                    DayOfWeek = s.DayOfWeek,
+                    Lessons = s.SchedulesToLessons.Select(sl => new LessonsDto
+                    {
+                        Id = sl.Id,
+                        LessonName = sl.Lesson.Name,
+                        StartTime = sl.StartTime,
+                        EndTime = sl.EndTime
+                    }).ToList()
+                }).ToList()
+            })
             .ToListAsync();
 
         return groups;

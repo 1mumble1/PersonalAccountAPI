@@ -20,6 +20,7 @@ public class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
 
         builder.HasMany(s => s.SchedulesToLessons)
             .WithOne(sl => sl.Schedule)
-            .HasForeignKey(sl => sl.ScheduleId);
+            .HasForeignKey(sl => sl.ScheduleId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

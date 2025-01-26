@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 [ApiController]
 [Route("group")]
@@ -33,6 +33,13 @@ public class GroupController : ControllerBase
     {
         var group = await _groupService.GetGroupByIdWithSchedules(id);
         return Ok(group);
+    }
+
+    [HttpGet("/schedule")]
+    public async Task<ActionResult<List<GroupWithSchedulesResponse>>> GetAllGroupsWithSchedules()
+    {
+        var groups = await _groupService.GetAllGroupsWithSchedules();
+        return Ok(groups);
     }
 
     [HttpPost("")]

@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace PersonalAccountAPI.Controllers;
 

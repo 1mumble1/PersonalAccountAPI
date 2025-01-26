@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions.Repositories;
 using Domain.Abstractions.Services;
 using Domain.Entities;
-using PersonalAccountAPI.Dto;
+using Domain.Abstractions.Dto;
 
 namespace Application.Services;
 
@@ -27,6 +27,11 @@ public class GroupService : IGroupService
     public async Task<GroupWithSchedulesResponse> GetGroupByIdWithSchedules(int id)
     {
         return await _groupRepository.GetByIdWithSchedules(id);
+    }
+
+    public async Task<List<GroupWithSchedulesResponse>> GetAllGroupsWithSchedules()
+    {
+        return await _groupRepository.GetAllWithSchedules();
     }
 
     public async Task<Group> CreateGroup(Group group)
