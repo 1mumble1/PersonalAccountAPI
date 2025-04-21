@@ -8,6 +8,7 @@ namespace Infrastructure.Repositories;
 public class DancingEventRepository : IDancingEventRepository
 {
     private readonly AppDbContext _dbContext;
+
     public DancingEventRepository(AppDbContext dbContext)
     {
         _dbContext = dbContext;

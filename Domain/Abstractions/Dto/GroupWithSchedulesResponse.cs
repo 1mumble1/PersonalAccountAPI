@@ -1,4 +1,6 @@
-﻿namespace Domain.Abstractions.Dto;
+﻿using Domain.Entities;
+
+namespace Domain.Abstractions.Dto;
 
 public class GroupWithSchedulesResponse
 {

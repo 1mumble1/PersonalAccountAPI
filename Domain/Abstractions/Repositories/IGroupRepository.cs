@@ -14,4 +14,5 @@ public interface IGroupRepository
     Task<GroupWithEventsResponse> GetByIdWithEvents(int id);
     Task<List<GroupWithEventsResponse>> GetAllWithEvents();
     Task<List<GroupWithSchedulesResponse>> GetAllWithSchedules();
+    Task<List<GroupWithDancingEventsResponse>> GetAllWithDancingEvents();
 }

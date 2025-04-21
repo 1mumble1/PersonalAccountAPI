@@ -43,12 +43,15 @@ public class GroupRepository : IGroupRepository
             .Where(g => g.Id == id)
             .Select(g => new GroupWithSchedulesResponse
             {
+                Id = g.Id,
                 Name = g.Name,
                 Schedules = g.Schedules.Select(s => new ScheduleResponse
                 {
+                    Id = s.Id,
                     DayOfWeek = s.DayOfWeek,
                     Lessons = s.SchedulesToLessons.Select(sl => new LessonsDto
                     {
+                        Id = sl.Id,
                         LessonName = sl.Lesson.Name,
                         StartTime = sl.StartTime,
                         EndTime = sl.EndTime
@@ -128,9 +131,11 @@ public class GroupRepository : IGroupRepository
             .AsNoTracking()
             .Select(g => new GroupWithEventsResponse
             {
+                Id = g.Id,
                 Name = g.Name,
                 Events = g.DancingEvents.Select(s => new DancingEventDto
                 {
+                    Id = s.Id,
                     Name = s.Name,
                     Date = s.Date,
                     Time = (TimeOnly)s.Time,
@@ -138,6 +143,28 @@ public class GroupRepository : IGroupRepository
                 }).ToList()
             })
         .ToListAsync();
+
+        return groups;
+    }
+
+    public async Task<List<GroupWithDancingEventsResponse>> GetAllWithDancingEvents()
+    {
+        var groups = await _dbContext.Groups
+            .Include(g => g.DancingEvents)
+            .AsNoTracking ()
+            .Select(g => new GroupWithDancingEventsResponse
+            {
+                Id = g.Id,
+                Name = g.Name,
+                DancingEvents = g.DancingEvents.Select(de => new DancingEventResponse
+                {
+                    Id = de.Id,
+                    Name = de.Name,
+                    Date = de.Date,
+                    Time = de.Time,
+                    Description = de.Description,
+                }).ToList()
+            }).ToListAsync();
 
         return groups;
     }
