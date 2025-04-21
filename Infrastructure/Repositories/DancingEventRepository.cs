@@ -20,12 +20,17 @@ public class DancingEventRepository : IDancingEventRepository
         try
         {
             var dancingEvent = new DancingEvent(eventResponse.Name, eventResponse.Date, eventResponse.Time, eventResponse.Description);
-
             var group = await _dbContext.Groups.FindAsync(groupId);
 
+            if (group == null)
+                throw new ArgumentException("Group not found");
+
             dancingEvent.Groups.Add(group);
+            group.DancingEvents.Add(dancingEvent); // Добавляем обратную связь
+
             _dbContext.DancingEvents.Add(dancingEvent);
             await _dbContext.SaveChangesAsync();
+            await transaction.CommitAsync(); // Явный коммит транзакции
 
             return dancingEvent;
         }
